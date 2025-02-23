@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Palm Tree Land Change Detection  WebApp DataVisualization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      
+      #map {
+      	background-image: url('assets/grey_wash_wall/grey_wash_wall.png');
+      }
+      
+      #map div.leaflet-tile-pane {
+      	opacity: 0.5;
+      }
+      
+      .text-value {
+      	color: #000000;
+      	font-weight: bold;
+      	font-size: 20px;
+      	width: 100%;
+      }
+      
+      .leaflet-control-legend {
+      	max-height: none !important;
+      }
+        
+    .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+        
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+    </style>
+    <link rel="stylesheet" href="assets/css/bootstrap-responsive.css" >
+    <link rel="stylesheet" href="assets/js/leaflet.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="assets/css/dvf.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="assets/css/example.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="assets/css/ui.css" type="text/css" media="screen" />
+</head>
+
+<body>
+	<div class="navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Palm Tree Farm Land Change Detection  by  Releaf Company</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+    	<div class="row-fluid">
+			<div id="map"></div>
+		</div>
+	</div>
+  <script type="text/javascript" src="assets/js/leaflet.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="data/data.js"></script>
+	<script type="text/javascript">
+
+$(document).ready(function(){
+	var map;
+  //resize map 
+	var resize = function () {
+		var $map = $('#map');
+		
+		$map.height($(window).height() - $('div.navbar').outerHeight());
+		
+		if (map) {
+			map.invalidateSize();
+		}
+	};
+	
+	$(window).on('resize', function () {
+		resize();
+	});
+	
+	resize();
+
+//leaflet map initialization
+map = L.map('map').setView([4.981857842365571,7.375588274179563 ], 12);
+
+//basemap
+var basemap = L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: 'Releaf',
+                maxZoom: 18
+            }
+        ).addTo(map);
+
+ // map scale control
+L.control.scale().addTo(map);
+
+//layer control info
+const info = L.control(); 
+
+//map legend layer
+const legend = L.control({position: 'bottomright'});       
+let palmTreeData;  
+function dataLayer(){
+     palmTreeData =  L.geoJSON(data, {
+    style: function(feature) {
+      //palm tree class clasification based on value
+        if(feature.properties.Ages==="13 - 18"){
+            return  { 
+                    fillColor:"#056608",
+                    weight: 2,
+                    opacity: 1,
+                    color: "#056608",
+                    dashArray: '',
+                    fillOpacity: 0.8
+                    };
+        }else if(feature.properties.Ages==="5 - 8"){
+           return  { fillColor:"#06ce0c",
+                    weight: 2,
+                    opacity: 1,
+                    color: "#06ce0c",
+                    dashArray: '',
+                    fillOpacity: 0.8
+                    };
+        }else if(feature.properties.Ages==="8 - 13"){
+            return  { fillColor:"#07af0c",
+                    weight: 2,
+                    opacity: 1,
+                    color: "#07af0c",
+                    dashArray: '',
+                    fillOpacity: 0.8
+                    };
+        }else if(feature.properties.Ages==="0 - 4"){
+             return { 
+                    fillColor:"#06800a",
+                    weight: 2,
+                    opacity: 1,
+                    color: "#06800a",
+                    dashArray: '',
+                    fillOpacity: 0.8
+                    };
+    }else{
+        return  { 
+                    fillColor:"#10f517",
+                    weight: 2,
+                    opacity: 1,
+                    color: "#10f517",
+                    dashArray: '',
+                    fillOpacity: 0.8
+                    };
+
+    } 
+    },
+onEachFeature:function(feature, layer) {
+    layer.on({
+        mouseover:function(e) {
+        var layer = e.target;
+        layer.setStyle({
+        weight: 2,
+        color: '#e4f703',
+        dashArray: '',
+        fillOpacity: 0.7
+         });
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+          }
+        info.update(feature.properties);
+        },
+        mouseout: function (e) {
+        var layer = e.target;
+        layer.setStyle({
+        weight: null,
+        color: null,
+        dashArray: '',
+        fillOpacity: null
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+                       },
+        click: function(e) {
+               map.fitBounds(e.target.getBounds());
+        }
+    });
+},
+   
+}).addTo(map);   
+}
+    
+    
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Palm tree data class</h4>' +  (props ?
+        '<b>' + props.Ages + '</b><br />'  
+        : 'Hover over a polygon');
+};
+
+info.addTo(map);
+  legend.onAdd = function (map){
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = ["13 - 18", "8 - 13","5 - 8","other"],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i]) + '"></i> ' +
+             (grades[i] ?  grades[i] + '<br>' : '+');
+    }
+
+    return div;
+};
+//palm tree class color clasification 
+function getColor(d){
+    return d == "13 - 18" ? "#056608" :
+           d == "5 - 8" ? "#06ce0c" :
+           d == "8 - 13"  ? "#07af0c":
+           d == "other"   ? "#10f517":"#06800a" ;
+}
+legend.addTo(map);  
+
+dataLayer();
+//overlayer cotrol layer
+L.control.layers({
+    'basemap':basemap
+},{
+   'EbonyPolygon':palmTreeData,
+    
+}).addTo(map);
+    
+});	
+</script>
+</body>
+</html>
