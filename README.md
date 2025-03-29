@@ -6,20 +6,20 @@
 
 # Palm Tree Land Change Detection Webmap Analysis
 
-# Steps to run project locally
+## Steps by Step to run Project on Your Machine Locally!
 
- - Download Project Locally 
+ - #Step 1 : Clone Project using the command bellow!
  ```
 git clone https://github.com/ramaalibonga/Palm-Tree-Farm-Land-Change-Detection-Webmap-Analysis.git
 ```
-# Run index.html then Enjoy!
+#Step 2 : Run index.html  on Your browser  and  Enjoy!
 
 ```
  index.html
 ```
 
 
-# Technology used
+## Technology used
 
 - Leaflet js
 - Html
