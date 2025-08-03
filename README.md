@@ -1,31 +1,30 @@
-<h1 align="center">
-  <img src="e" width="300">
-  <br>
-   Bantu Geohub
-</h1>
+# 🌴 Palm Tree Land Change Detection Web Map Analysis
 
-# Palm Tree Land Change Detection Webmap Analysis
+## 🚀 Getting Started — Run the Project Locally
 
-## Steps by Step to run Project on Your Machine Locally!
-
- - #Step 1 : Clone Project using the command bellow!
+ - #Step 1: Clone the Repository
  ```
 git clone https://github.com/ramaalibonga/Palm-Tree-Farm-Land-Change-Detection-Webmap-Analysis.git
 ```
-#Step 2 : Run index.html  on Your browser  and  Enjoy!
+#Step 2: Open the Application
 
 ```
  index.html
 ```
 
 
-## Technology used
+#🛠️ Technologies Used
 
-- Leaflet js
-- Html
-- Css
+-Leaflet.js – for interactive map rendering
 
-# FeedBack
-[Bantu Geohub](https://www.instagram.com/bantu_geohub/)
+-HTML – markup structure
 
-[ramaalicoder](https://www.instagram.com/ramaalicoder/)
+-CSS – styling and layout
+
+
+
+#📢 Feedback & Contact
+
+[Follow us on Instagram: @bantu_geohub](https://www.instagram.com/bantu_geohub/)
+
+[Connect with the developer: @ramaalicoder](https://www.instagram.com/ramaalicoder/)
