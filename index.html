@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Palm Tree Land Change Detection  WebApp DataVisualization</title>
+    <title>Palm Tree Land Change Detection  Webmap Analysis </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -70,7 +70,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Palm Tree Farm Land Change Detection  by  Releaf Company</a>
+          <a class="brand" href="#">Palm Tree Farm plantation  Land Change Detection Analysis  by  Releaf Company</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"></li>
@@ -109,10 +109,10 @@ $(document).ready(function(){
 	
 	resize();
 
-//leaflet map initialization
+//leaflet map  initialization to show  basemap
 map = L.map('map').setView([4.981857842365571,7.375588274179563 ], 12);
 
-//basemap
+//leaflet basemap layer 
 var basemap = L.tileLayer(
             'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {
@@ -124,16 +124,15 @@ var basemap = L.tileLayer(
  // map scale control
 L.control.scale().addTo(map);
 
-//layer control info
+//leaflet layer control object 
 const info = L.control(); 
 
-//map legend layer
+//leaflet maplegend to show want represent on map
 const legend = L.control({position: 'bottomright'});       
 let palmTreeData;  
 function dataLayer(){
      palmTreeData =  L.geoJSON(data, {
     style: function(feature) {
-      //palm tree class clasification based on value
         if(feature.properties.Ages==="13 - 18"){
             return  { 
                     fillColor:"#056608",
@@ -257,7 +256,7 @@ function getColor(d){
 legend.addTo(map);  
 
 dataLayer();
-//overlayer cotrol layer
+//leaflet overlayer used to add basemap layer on map
 L.control.layers({
     'basemap':basemap
 },{
